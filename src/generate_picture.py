@@ -92,14 +92,14 @@ def generate_image(
         "--res", f"{width}x{height}"
     ]
     
-    # 명령어 실행 정보 출력
-    logger.info(f"프롬프트: '{prompt}'")
-    logger.info(f"시드: {seed}")
-    logger.info(f"저장 경로: {output_path}")
+    # Print command execution info
+    logger.info(f"Prompt: '{prompt}'")
+    logger.info(f"Seed: {seed}")
+    logger.info(f"Save path: {output_path}")
     
     # 명령어 실행
     subprocess.run(cmd)
-    logger.info("이미지 생성 완료")
+    logger.info("Image generation complete")
 
 
 def parse_arguments() -> Dict[str, Any]:
@@ -109,55 +109,55 @@ def parse_arguments() -> Dict[str, Any]:
     Returns:
         파싱된 명령줄 인수 딕셔너리
     """
-    parser = argparse.ArgumentParser(description="Stable Diffusion을 사용하여 이미지를 생성합니다.")
+    parser = argparse.ArgumentParser(description="Generate images using Stable Diffusion.")
     
     parser.add_argument(
         "output_dir", 
-        help="생성된 이미지를 저장할 디렉터리"
+        help="Directory to save generated images"
     )
     parser.add_argument(
         "--prompts", 
         default="prompts/flowers.json", 
-        help="사용할 프롬프트 파일"
+        help="Prompt file to use"
     )
     parser.add_argument(
         "--prompt", 
         default="", 
-        help="사용할 프롬프트 (지정하면 프롬프트 파일 무시)"
+        help="Prompt to use (overrides prompt file if specified)"
     )
     parser.add_argument(
         "--seed", 
         type=int,
         default=random.randint(1, 10000), 
-        help="이미지 생성에 사용할 시드"
+        help="Seed to use for image generation"
     )
     parser.add_argument(
         "--steps", 
         type=int,
         default=3, 
-        help="수행할 스텝 수"
+        help="Number of steps to perform"
     )
     parser.add_argument(
         "--width", 
         type=int,
         default=480, 
-        help="생성할 이미지 너비"
+        help="Width of the generated image"
     )
     parser.add_argument(
         "--height", 
         type=int,
         default=800, 
-        help="생성할 이미지 높이"
+        help="Height of the generated image"
     )
     parser.add_argument(
         "--sd", 
         default="OnnxStream/src/build/sd", 
-        help="Stable Diffusion 실행 파일 경로"
+        help="Path to Stable Diffusion executable"
     )
     parser.add_argument(
         "--model", 
         default="models/stable-diffusion-xl-turbo-1.0-anyshape-onnxstream", 
-        help="사용할 Stable Diffusion 모델 경로"
+        help="Path to Stable Diffusion model to use"
     )
     
     return vars(parser.parse_args())
@@ -178,14 +178,14 @@ def main() -> int:
         output_dir = args["output_dir"]
         if not os.path.exists(output_dir):
             os.makedirs(output_dir, exist_ok=True)
-            logger.info(f"출력 디렉터리 생성: {output_dir}")
+            logger.info(f"Created output directory: {output_dir}")
         
         # 프롬프트 생성
         try:
             prompts = load_prompts(args["prompts"])
             prompt = generate_prompt(prompts, args["prompt"])
         except Exception as e:
-            logger.error(f"프롬프트 로드 실패: {e}")
+            logger.error(f"Failed to load prompts: {e}")
             return 1
         
         # 고유 파일명 생성
@@ -205,19 +205,19 @@ def main() -> int:
                 seed=args["seed"]
             )
         except Exception as e:
-            logger.error(f"이미지 생성 실패: {e}")
+            logger.error(f"Failed to generate image: {e}")
             return 1
         
         # 공유 파일로 복사
         shared_file = 'output.png'
         shared_fullpath = os.path.join(output_dir, shared_file)
         shutil.copyfile(fullpath, shared_fullpath)
-        logger.info(f"이미지 복사: {shared_fullpath}")
+        logger.info(f"Image copied to: {shared_fullpath}")
         
         return 0
         
     except Exception as e:
-        logger.error(f"예상치 못한 오류: {e}")
+        logger.error(f"Unexpected error: {e}")
         return 1
 
 

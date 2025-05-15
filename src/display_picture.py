@@ -46,13 +46,13 @@ def load_image(image_path: str) -> np.ndarray:
         ValueError: 이미지를 읽을 수 없는 경우
     """
     if not os.path.exists(image_path):
-        raise FileNotFoundError(f"이미지 파일을 찾을 수 없습니다: {image_path}")
+        raise FileNotFoundError(f"Image file not found: {image_path}")
         
     image = cv2.imread(image_path)
     if image is None:
-        raise ValueError(f"이미지를 읽을 수 없습니다: {image_path}")
+        raise ValueError(f"Cannot read image: {image_path}")
         
-    logger.debug(f"이미지 로드 완료: {image_path}")
+    logger.debug(f"Image loading complete: {image_path}")
     return image
 
 
@@ -73,9 +73,9 @@ def save_image(image_path: str, image: np.ndarray) -> None:
         
     success = cv2.imwrite(image_path, image)
     if not success:
-        raise ValueError(f"이미지 저장에 실패했습니다: {image_path}")
+        raise ValueError(f"Failed to save image: {image_path}")
         
-    logger.info(f"이미지 저장 완료: {image_path}")
+    logger.info(f"Image saved: {image_path}")
 
 
 def crop(image: np.ndarray, disp_w: int, disp_h: int, intelligent: bool = True) -> np.ndarray:
@@ -92,16 +92,16 @@ def crop(image: np.ndarray, disp_w: int, disp_h: int, intelligent: bool = True) 
         크롭된 이미지 배열
     """
     if image is None or image.size == 0:
-        raise ValueError("유효하지 않은 이미지입니다.")
+        raise ValueError("Invalid image.")
         
     img_h, img_w, img_c = image.shape
-    logger.info(f"입력 이미지 크기: {img_w} x {img_h}")
+    logger.info(f"Input image size: {img_w} x {img_h}")
 
     img_aspect = img_w / img_h
     disp_aspect = disp_w / disp_h
 
-    logger.info(f"이미지 비율: {img_aspect:.4f} ({img_w} x {img_h})")
-    logger.info(f"디스플레이 비율: {disp_aspect:.4f} ({disp_w} x {disp_h})")
+    logger.info(f"Image aspect ratio: {img_aspect:.4f} ({img_w} x {img_h})")
+    logger.info(f"Display aspect ratio: {disp_aspect:.4f} ({disp_w} x {disp_h})")
 
     # 이미지 리사이징
     if img_aspect < disp_aspect:
@@ -111,7 +111,7 @@ def crop(image: np.ndarray, disp_w: int, disp_h: int, intelligent: bool = True) 
         # 높이에 맞추고 너비 크롭
         resize = (int(disp_h * img_aspect), disp_h)
 
-    logger.info(f"리사이징: {resize}")
+    logger.info(f"Resizing: {resize}")
     resized_image = cv2.resize(image, resize)
     img_h, img_w, _ = resized_image.shape
 
@@ -121,10 +121,10 @@ def crop(image: np.ndarray, disp_w: int, disp_h: int, intelligent: bool = True) 
     
     # 논리 검증
     if not (x_off == 0 or y_off == 0):
-        logger.error("리사이징 로직 오류: x_offset과 y_offset 중 하나는 0이어야 합니다.")
-        logger.debug(f"값: x_offset={x_off}, y_offset={y_off}")
-        logger.debug(f"이미지 크기: {img_w}x{img_h}, 디스플레이: {disp_w}x{disp_h}")
-        raise AssertionError("리사이징 로직 오류")
+        logger.error("Resizing logic error: either x_offset or y_offset should be 0.")
+        logger.debug(f"Values: x_offset={x_off}, y_offset={y_off}")
+        logger.debug(f"Image size: {img_w}x{img_h}, Display: {disp_w}x{disp_h}")
+        raise AssertionError("Resizing logic error")
 
     # 지능적 크롭 사용 시 현저도 맵 분석
     if intelligent:
@@ -133,7 +133,7 @@ def crop(image: np.ndarray, disp_w: int, disp_h: int, intelligent: bool = True) 
             success, saliency_map = saliency.computeSaliency(resized_image)
             
             if not success:
-                logger.warning("현저도 맵 생성 실패, 중앙 크롭으로 대체합니다.")
+                logger.warning("Failed to generate saliency map, falling back to center crop.")
             else:
                 saliency_map = (saliency_map * 255).astype("uint8")
                 
@@ -147,9 +147,9 @@ def crop(image: np.ndarray, disp_w: int, disp_h: int, intelligent: bool = True) 
                     img_centre = int(img_h / 2)
                     shift_y = max(min(sal_centre - img_centre, y_off), -y_off)
                     y_off += shift_y
-                    logger.debug(f"수직 현저도 중심: {sal_centre}, 이동: {shift_y}")
-                else:  # 너비 방향 크롭
-                    # 각 열의 최대 현저도 계산
+                    logger.debug(f"Vertical saliency center: {sal_centre}, Shift: {shift_y}")
+                else:  # Horizontal cropping
+                    # Compute maximum saliency for each column
                     horiz = np.max(saliency_map, axis=0)
                     horiz = np.convolve(horiz, np.ones(CONVOLUTION_KERNEL_SIZE)/CONVOLUTION_KERNEL_SIZE, "same")
                     
@@ -158,10 +158,10 @@ def crop(image: np.ndarray, disp_w: int, disp_h: int, intelligent: bool = True) 
                     img_centre = int(img_w / 2)
                     shift_x = max(min(sal_centre - img_centre, x_off), -x_off)
                     x_off += shift_x
-                    logger.debug(f"수평 현저도 중심: {sal_centre}, 이동: {shift_x}")
+                    logger.debug(f"Horizontal saliency center: {sal_centre}, Shift: {shift_x}")
         except Exception as e:
-            logger.error(f"현저도 분석 오류: {e}")
-            logger.warning("중앙 크롭으로 대체합니다.")
+            logger.error(f"Saliency analysis error: {e}")
+            logger.warning("Falling back to center crop.")
 
     # 최종 크롭 수행
     cropped_image = resized_image[y_off:y_off + disp_h,
@@ -169,11 +169,11 @@ def crop(image: np.ndarray, disp_w: int, disp_h: int, intelligent: bool = True) 
     
     # 크롭 후 크기 검증
     c_h, c_w, _ = cropped_image.shape
-    logger.info(f"크롭 후 크기: {c_w} x {c_h}")
+    logger.info(f"Size after cropping: {c_w} x {c_h}")
     
     # 크기 불일치 시 강제 리사이징
     if c_w != disp_w or c_h != disp_h:
-        logger.warning(f"크롭된 이미지 크기가 일치하지 않습니다. 강제 리사이징합니다.")
+        logger.warning(f"Cropped image size does not match. Forcing resize.")
         cropped_image = cv2.resize(cropped_image, (disp_w, disp_h))
         
     return cropped_image
@@ -199,32 +199,32 @@ def display_waveshare(image: np.ndarray, epd_type: str = DEFAULT_EPD_TYPE, satur
         
         # 이미지 방향 조정 (세로 이미지 처리)
         if image.shape[0] > image.shape[1]:
-            logger.debug("세로 이미지 감지: 이미지를 회전합니다.")
+            logger.debug("Portrait image detected: rotating image.")
             image = cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
         
         # OpenCV BGR에서 PIL RGB로 변환
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         pil_image = Image.fromarray(image)
         
-        # 디스플레이 초기화 및 이미지 표시
-        logger.info("e-Paper 디스플레이 초기화 중...")
+        # Initialize display and show image
+        logger.info("Initializing e-Paper display...")
         epd.init()
         
-        logger.info("이미지 버퍼 생성 및 표시 중...")
+        logger.info("Creating and displaying image buffer...")
         epd.display(epd.getbuffer(pil_image))
         
-        logger.info("디스플레이를 대기 모드로 전환합니다.")
+        logger.info("Putting display to sleep mode.")
         epd.sleep()
         
-        logger.info("이미지가 e-Paper 디스플레이에 성공적으로 표시되었습니다.")
+        logger.info("Image successfully displayed on e-Paper display.")
     except ImportError as e:
-        logger.error(f"Waveshare EPD 모듈을 가져올 수 없습니다: {e}")
-        logger.error("필요한 패키지가 설치되어 있는지 확인하세요.")
-        logger.error("python3 -m venv --system-site-packages venv를 사용하여 시스템 패키지를 활용할 수 있도록 venv를 재생성하세요.")
+        logger.error(f"Could not import Waveshare EPD module: {e}")
+        logger.error("Make sure required packages are installed.")
+        logger.error("Recreate your venv with 'python3 -m venv --system-site-packages venv' to use system packages.")
         raise
     except Exception as e:
-        logger.error(f"디스플레이 출력 오류: {e}")
-        raise RuntimeError(f"이미지 표시 실패: {e}")
+        logger.error(f"Display output error: {e}")
+        raise RuntimeError(f"Failed to display image: {e}")
 
 
 def parse_arguments() -> Dict[str, Any]:
@@ -235,65 +235,65 @@ def parse_arguments() -> Dict[str, Any]:
         파싱된 명령줄 인수 딕셔너리
     """
     parser = argparse.ArgumentParser(
-        description="이미지를 지능적으로 크롭하고 Waveshare e-Paper 디스플레이에 표시합니다.",
+        description="Intelligently crop images and display them on Waveshare e-Paper displays.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     
     parser.add_argument(
         "image", 
-        help="처리할 입력 이미지 파일 경로"
+        help="Input image file path to process"
     )
     parser.add_argument(
         "-o", "--output", 
         default="",
-        help="처리된 이미지를 저장할 경로 (저장이 필요한 경우)"
+        help="Path to save the processed image (if saving is needed)"
     )
     parser.add_argument(
         "-p", "--portrait", 
         action="store_true",
         default=False, 
-        help="세로 방향 모드로 설정"
+        help="Set to portrait mode"
     )
     parser.add_argument(
         "-c", "--centre_crop", 
         action="store_true",
         default=False, 
-        help="지능적 크롭 대신 중앙 크롭 사용"
+        help="Use center crop instead of intelligent crop"
     )
     parser.add_argument(
         "-r", "--resize_only", 
         action="store_true",
         default=False, 
-        help="종횡비를 무시하고 디스플레이 크기에 맞게 단순 리사이징"
+        help="Simple resize to display dimensions ignoring aspect ratio"
     )
     parser.add_argument(
         "-s", "--simulate_display", 
         action="store_true",
         default=False, 
-        help="e-Paper 디스플레이 상호작용 없이 시뮬레이션 모드로 실행"
+        help="Run in simulation mode without e-Paper display interaction"
     )
     parser.add_argument(
         "--width", 
         type=int,
         default=DEFAULT_WIDTH, 
-        help="디스플레이 너비 (시뮬레이션 모드에서 사용)"
+        help="Display width (used in simulation mode)"
     )
     parser.add_argument(
         "--height", 
         type=int,
         default=DEFAULT_HEIGHT, 
-        help="디스플레이 높이 (시뮬레이션 모드에서 사용)"
+        help="Display height (used in simulation mode)"
     )
     parser.add_argument(
         "--epd", 
         default=DEFAULT_EPD_TYPE,
-        help="사용할 Waveshare EPD 모듈 유형 (예: epd7in3f)"
+        help="Waveshare EPD module type to use (e.g., epd7in3f)"
     )
     parser.add_argument(
         "--debug", 
         action="store_true",
         default=False, 
-        help="디버그 로깅 활성화"
+        help="Enable debug logging"
     )
     
     return vars(parser.parse_args())
@@ -312,7 +312,7 @@ def main() -> int:
     # 디버그 모드 설정
     if args["debug"]:
         logger.setLevel(logging.DEBUG)
-        logger.debug("디버그 모드가 활성화되었습니다.")
+        logger.debug("Debug mode activated.")
     
     try:
         # 디스플레이 크기 설정
@@ -320,51 +320,51 @@ def main() -> int:
         
         # 세로 모드 처리
         if args["portrait"]:
-            logger.info("세로 모드가 활성화되었습니다.")
+            logger.info("Portrait mode activated.")
             disp_w, disp_h = disp_h, disp_w
         
         # 이미지 로드
         try:
             image = load_image(args["image"])
         except (FileNotFoundError, ValueError) as e:
-            logger.error(f"이미지 로드 실패: {e}")
+            logger.error(f"Failed to load image: {e}")
             return 1
         
         # 이미지 처리
         if args["resize_only"]:
-            logger.info(f"단순 리사이징: {disp_w}x{disp_h}")
+            logger.info(f"Simple resizing: {disp_w}x{disp_h}")
             processed_image = cv2.resize(image, (disp_w, disp_h))
         else:
             # 중앙 크롭 또는 지능적 크롭
             use_intelligent_crop = not args["centre_crop"]
-            crop_type = "지능적 크롭" if use_intelligent_crop else "중앙 크롭"
-            logger.info(f"{crop_type} 사용")
+            crop_type = "Intelligent crop" if use_intelligent_crop else "Center crop"
+            logger.info(f"Using {crop_type}")
             processed_image = crop(image, disp_w, disp_h, intelligent=use_intelligent_crop)
         
         # 결과 이미지 표시
         if not args["simulate_display"]:
             try:
-                logger.info(f"{args['epd']} 디스플레이 모듈을 사용하여 이미지 표시 중...")
+                logger.info(f"Displaying image using {args['epd']} display module...")
                 display_waveshare(processed_image, epd_type=args["epd"])
             except (ImportError, RuntimeError) as e:
-                logger.error(f"디스플레이 오류: {e}")
-                # 디스플레이 오류가 있더라도 이미지 저장은 계속 진행
+                logger.error(f"Display error: {e}")
+                # Continue to save image even if display fails
         else:
-            logger.info("시뮬레이션 모드: 디스플레이 출력을 건너뜁니다.")
+            logger.info("Simulation mode: skipping display output.")
         
         # 이미지 저장
         if args["output"]:
             try:
                 save_image(args["output"], processed_image)
             except ValueError as e:
-                logger.error(f"이미지 저장 실패: {e}")
+                logger.error(f"Failed to save image: {e}")
                 return 1
         
-        logger.info("처리가 성공적으로 완료되었습니다.")
+        logger.info("Processing completed successfully.")
         return 0
         
     except Exception as e:
-        logger.error(f"예상치 못한 오류 발생: {e}")
+        logger.error(f"Unexpected error occurred: {e}")
         if args["debug"]:
             import traceback
             logger.debug(traceback.format_exc())
