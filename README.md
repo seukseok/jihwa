@@ -51,6 +51,7 @@ git clone https://github.com/seukseok/jihwa.git
 그런 다음 설치 스크립트를 실행하세요:
 ```bash
 cd jihwa
+chmod +x scripts/install.sh
 scripts/install.sh
 ```
 `scripts/install.sh`는 필요한 모든 시스템 패키지, 파이썬 라이브러리 및 [OnnxStream](https://huggingface.co/vitoplantamura/stable-diffusion-xl-turbo-1.0-anyshape-onnxstream)(Stable Diffusion)을 설치하는 명령어가 포함되어 있습니다.
@@ -88,14 +89,14 @@ crontab에 등록하면 시스템이 자정마다 자동으로 이미지를 생�
 
 ```bash
 #!/bin/bash
-cd "/home/jion"
-python jion/src/generate_picture.py --width 480 --height 800 image_dir
-python jion/src/display_picture.py -r image_dir/output.png
+cd "/home/jihwa"
+python jihwa/src/generate_picture.py --width 480 --height 800 image_dir
+python jihwa/src/display_picture.py -r image_dir/output.png
 ```
 당연히 코드가 있는 위치를 가리키도록 변경하세요.
 
 그런 다음 crontab에 항목을 추가했습니다(`crontab -e`로 crontab 파일 편집):
-`0 0 * * * /home/jion/bin/cron_auto`
+`0 0 * * * /home/jihwa/bin/cron_auto`
 이 명령은 매일 자정에 `cron_auto`를 실행합니다.
 
 e-paper 디스플레이는 온도에 민감하다는 점에 유의하세요. 라즈베리 파이 제로의 환경에 따라 장시간 뜨거워질 수 있으며, 이로 인해 디스플레이에 변색이 발생할 수 있습니다. 이는 이미지 생성 후 디스플레이 업데이트를 지연시켜 방지할 수 있습니다.
