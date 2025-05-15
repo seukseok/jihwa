@@ -32,7 +32,7 @@
 
 ## E-paper 인터페이스 활성화
 
-`sudo raspi-config`를 실행하고 **SPI 인터페이스**와 **I2C 인터페이스**를 활성화하세요.
+`sudo raspi-config`를 실행하고 **SPI 인터페이스**를 활성화하세요.
 `Choose Interfacing Options -> SPI -> Yes Enable SPI interface`
 `sudo reboot`
 
@@ -65,13 +65,13 @@ scripts/install.sh
 
 ## 이미지 표시
 
-디스플레이에 표시하려면 `python src/display_picture.py -r output.png` 명령을 사용하세요.
+디스플레이에 표시하려면 `python src/display_picture.py -r image_dir/output.png` 명령을 사용하세요.
 
 ## 가로로 디스플레이
 
 가로로 방향 디스플레이에 세로 이미지를 생성하려면 `generate_picture.py`의 너비와 높이 값을 바꾸고 `display_picture.py` 스크립트에 `-p`를 포함하세요.
 
-`python src/generate_picture.py --width=480 --height=800 image_dir`
+`python src/generate_picture.py --width=800 --height=480 image_dir`
 
 더 많은 옵션을 보려면 `-h` 또는 `--help` 플래그 쓰세요.
 
@@ -84,10 +84,11 @@ crontab에 등록하면 시스템이 자정마다 자동으로 이미지를 생�
 *팁:* 여름철 고온 환경에서는 디스플레이가 일시적으로 변색될 수 있으므로  
 이미지 생성과 디스플레이 업데이트 사이에 `sleep 30` 같은 지연을 넣는 것도 고려해보세요.
 
-```#!/bin/bash
+```
+#!/bin/bash
 cd "/home/jion"
-python jion/src/generate_picture.py --width 480 --height 800 output_dir
-python jion/src/display_picture.py -r output_dir/output.png
+python jion/src/generate_picture.py --width 480 --height 800 image_dir
+python jion/src/display_picture.py -r image_dir/output.png
 ```
 당연히 코드가 있는 위치를 가리키도록 변경하세요.
 
@@ -111,6 +112,6 @@ e-paper 디스플레이는 온도에 민감하다는 점에 유의하세요. 라
 하지만 이미지가 매번 새로 생성되므로 `고유 이름 저장` 기능은 비활성화해도 됩니다.
 
 ```python
-# output_dir/uuid.png → 덮어쓰기 방식으로 변경
-fullpath = os.path.join(output_dir, "output.png")
+# image_dir/uuid.png → 덮어쓰기 방식으로 변경
+fullpath = os.path.join(image_dir, "output.png")
 ```

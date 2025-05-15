@@ -20,7 +20,7 @@ DEFAULT_WIDTH = 480
 DEFAULT_HEIGHT = 800
 DEFAULT_SATURATION = 1.0
 CONVOLUTION_KERNEL_SIZE = 64
-DEFAULT_EPD_TYPE = "epd7in3f"  # 데모모 Waveshare 디스플레이 타입
+DEFAULT_EPD_TYPE = "epd7in3f"  # 데모 Waveshare 디스플레이 타입
 
 # 로깅 설정
 logging.basicConfig(
