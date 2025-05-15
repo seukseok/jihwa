@@ -50,7 +50,7 @@ git clone https://github.com/seukseok/jihwa.git
 ```
 그런 다음 설치 스크립트를 실행하세요:
 ```bash
-cd jion
+cd jihwa
 scripts/install.sh
 ```
 `scripts/install.sh`는 필요한 모든 시스템 패키지, 파이썬 라이브러리 및 [OnnxStream](https://huggingface.co/vitoplantamura/stable-diffusion-xl-turbo-1.0-anyshape-onnxstream)(Stable Diffusion)을 설치하는 명령어가 포함되어 있습니다.
@@ -61,7 +61,7 @@ scripts/install.sh
 
 ## 이미지 생성
 
-`python src/generate_picture.py image_dir`
+`python src/generate_picture.py --width=480 --height=800 --step 3 image_dir`
 
 이 명령은 프롬프트를 기반으로 고유 이름을 가진 새 이미지와 표시하기 쉽게 'output.png'라는 이름의 복사본을 생성합니다.
 
