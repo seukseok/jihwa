@@ -32,22 +32,24 @@
 
 ## E-paper 인터페이스 활성화
 
-`sudo raspi-config`를 실행하고 **SPI 인터페이스**를 활성화하세요.
-`Choose Interfacing Options -> SPI -> Yes Enable SPI interface`
-`sudo reboot`
+```bash
+sudo raspi-config
+Choose Interfacing Options -> SPI -> Yes Enable SPI interface
+sudo reboot
+```
 
 ## 필요한 구성 요소 설치
 
 먼저 아래 명령으로 이 저장소를 다운로드하세요:
 
-```
+```bash
 sudo apt-get update -y
 sudo apt-get upgrade -y
 sudo apt install git
 git clone https://github.com/seukseok/jihwa.git
 ```
 그런 다음 설치 스크립트를 실행하세요:
-```
+```bash
 cd jion
 scripts/install.sh
 ```
@@ -84,7 +86,7 @@ crontab에 등록하면 시스템이 자정마다 자동으로 이미지를 생�
 *팁:* 여름철 고온 환경에서는 디스플레이가 일시적으로 변색될 수 있으므로  
 이미지 생성과 디스플레이 업데이트 사이에 `sleep 30` 같은 지연을 넣는 것도 고려해보세요.
 
-```
+```bash
 #!/bin/bash
 cd "/home/jion"
 python jion/src/generate_picture.py --width 480 --height 800 image_dir
