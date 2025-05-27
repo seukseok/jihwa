@@ -62,7 +62,7 @@ scripts/install.sh
 
 ## 이미지 생성
 
-`python src/generate_picture.py --width=480 --height=800 --step 3 image_dir`
+`python src/generate_picture.py --width=480 --height=800 --steps 3 image_dir`
 
 이 명령은 프롬프트를 기반으로 고유 이름을 가진 새 이미지와 표시하기 쉽게 'output.png'라는 이름의 복사본을 생성합니다.
 
