@@ -194,7 +194,7 @@ def display_waveshare(image: np.ndarray, epd_type: str = DEFAULT_EPD_TYPE, satur
     """
     try:
         # 동적으로 특정 EPD 모듈 가져오기
-        epd_module = __import__(f"e-Paper.{epd_type}", fromlist=['']) #원래는 폴더명이 waveshare_epd를 사용해서 (f"waveshare_epd.{epd_type}", fromlist=['']) 이지만, 폴더명을 e-Paper로 지정하였기에 e-Paper로 코드 변경
+        epd_module = __import__(f"e_Paper.{epd_type}", fromlist=['']) #원래는 폴더명이 waveshare_epd를 사용해서 (f"waveshare_epd.{epd_type}", fromlist=['']) 이지만, 폴더명을 e-Paper로 지정하였기에 e-Paper로 코드 변경
         epd = epd_module.EPD()
         
         # 이미지 방향 조정 (세로 이미지 처리)
