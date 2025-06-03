@@ -130,3 +130,18 @@ fullpath = os.path.join(image_dir, "output.png")
 아래 글을 참고하세요.
 
 [PiShrink로 라즈베리파이 이미지 축소](https://velog.io/@mseokq23/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4-%EC%9D%B4%EB%AF%B8%EC%A7%80%ED%8C%8C%EC%9D%BC-%EC%9A%A9%EB%9F%89-%EC%A4%84%EC%9D%B4%EA%B8%B0)
+
+# 중간마다 새로운 프롬프트 수정을 업데이트 해야할 때.
+
+1. 저장소를 클론합니다:
+```sh
+git clone https://github.com/mseokq23/jihwa_renew.git
+```
+2. 클론한 디렉토리로 이동합니다:
+```sh
+cd jihwa_renew
+```
+3. prompts 폴더를 원하는 경로로 복사합니다:
+```sh
+cp -r prompts /원하는/경로/
+```
