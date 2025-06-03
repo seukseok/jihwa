@@ -127,7 +127,6 @@ fullpath = os.path.join(image_dir, "output.png")
 
 이를 위해 Pishrink를 사용하시면 되며, SD카드를 img파일로 만드는 것은 Win32 Disk imager를 이용하고, 생성된 img파일은 rufus를 통해 포팅합니다.
 
-![image](https://github.com/user-attachments/assets/b3b5559d-a930-44fb-b66a-510063cc19c0)
-
+아래 글을 참고하세요.
 
 [PiShrink로 라즈베리파이 이미지 축소](https://velog.io/@mseokq23/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4-%EC%9D%B4%EB%AF%B8%EC%A7%80%ED%8C%8C%EC%9D%BC-%EC%9A%A9%EB%9F%89-%EC%A4%84%EC%9D%B4%EA%B8%B0)
