@@ -118,3 +118,13 @@ e-paper 디스플레이는 온도에 민감하다는 점에 유의하세요. 라
 # image_dir/uuid.png → 덮어쓰기 방식으로 변경
 fullpath = os.path.join(image_dir, "output.png")
 ```
+
+# 이미지파일 백업본 만드는법
+
+개발이 완료된 SD카드를 img로 만들어서 다른 SD 카드 그대로 넣고자 하면 기존 SD 카드의 빈공간까지 img파일의 용량으로 사용됩니다.
+이는 실제 용량(24GB)가 아닌 64GB(개발중인 SD카드의 최대용량)으로 img 파일이 만들어지 때문에, 더 적은 용량의 SD카드에 옮기기 위해서는 
+복제한 img파일의 용량을 줄이는 과정이 필요합니다.
+
+이를 위해 Pishrink를 사용하시면 되며, SD카드를 img파일로 만드는 것은 Win32 Disk imager를 이용하고, 생성된 img파일은 rufus를 통해 포팅합니다.
+
+[PiShrink로 라즈베리파이 이미지 축소](https://velog.io/@mseokq23/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4-%EC%9D%B4%EB%AF%B8%EC%A7%80%ED%8C%8C%EC%9D%BC-%EC%9A%A9%EB%9F%89-%EC%A4%84%EC%9D%B4%EA%B8%B0)
