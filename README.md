@@ -82,7 +82,7 @@ scripts/install.sh
 ## 명령줄 옵션 (Command-line options)
 아래 옵션들은 src/display_picture.py를 실행할 때 사용할 수 있는 것들입니다.
 
-### 옵션
+### 옵션(아직 수정중)
 
 image	(필수) 처리할 입력 이미지 파일 경로
 -o, --output	결과 이미지를 저장할 경로 (선택)
