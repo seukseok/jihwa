@@ -9,7 +9,7 @@
 - ✅ 오프라인 로컬 AI 이미지 생성 (Stable Diffusion XL Turbo, Onnx 양자화)
 - ✅ e-ink 기반 컬러 디스플레이 자동 표시
 - ✅ 프롬프트 랜덤 조합 지원 및 사용자 커스터마이징
-- ✅ `cron` 기반 자동 생성/출력 스케줄링 가능
+- ✅ `cron, ` 기반 자동 생성/출력 스케줄링 가능
 - ✅ 초저전력 구성 (저전력 SOC + e-ink 유지 전력)
 
 ---
@@ -82,18 +82,56 @@ scripts/install.sh
 ## 명령줄 옵션 (Command-line options) (아직 수정중)
 아래 옵션들은 src/display_picture.py | src/generate_picture.py 를 실행할 때 사용할 수 있는 것들입니다.
 
-### 이미지 출력 옵션(아직 수정중)
+옵션 조합에 따라
 
-image	(필수) 처리할 입력 이미지 파일 경로
--o, --output	결과 이미지를 저장할 경로 (선택)
--p, --portrait	세로 모드로 출력 (가로/세로 전환)
--c, --centre_crop	지능적 크롭 대신 중앙 크롭 사용
--r, --resize_only	크롭 없이 단순 리사이즈만 수행
--s, --simulate_display	실제 e-Paper 디스플레이 없이 시뮬레이션 모드(출력 X)
---width	디스플레이 너비 지정 (기본값: 480)
---height	디스플레이 높이 지정 (기본값: 800)
---epd	사용할 Waveshare EPD 모듈 타입 지정 (예: epd7in3f)
---debug	디버그 로깅 활성화
+실제 디스플레이로 전송
+시뮬레이션(파일 저장만)
+크롭/리사이즈 방식
+화면 방향
+디스플레이 종류
+등을 결정할 수 있습니다.
+필요한 옵션을 조합해서 사용하면 됩니다.
+
+### 1. 이미지 출력 옵션(아직 수정중)
+| 옵션 | 설명 |
+|------|------|
+| image | (필수) 처리할 입력 이미지 파일 경로 |
+| -o, --output | 결과 이미지를 저장할 경로 (선택) |
+| -p, --portrait | 세로 모드로 출력 (가로/세로 전환) |
+| -c, --centre_crop | 지능적 크롭 대신 중앙 크롭 사용 |
+| -r, --resize_only | 크롭 없이 단순 리사이즈만 수행 |
+| -s, --simulate_display | 실제 e-Paper 디스플레이 없이 시뮬레이션 모드(출력 X) |
+| --width | 디스플레이 너비 지정 (기본값: 480) |
+| --height | 디스플레이 높이 지정 (기본값: 800) |
+| --epd | 사용할 Waveshare EPD 모듈 타입 지정 (예: epd7in3f) |
+| --debug | 디버그 로깅 활성화 |
+
+### 예시
+```bash
+# python3 src/display_picture.py [이미지파일] [옵션들]
+
+python3 src/display_picture.py example.jpg --epd epd7in3f
+python3 src/display_picture.py example.jpg -p -o output.jpg
+python3 src/display_picture.py example.jpg --simulate_display
+```
+
+### 2. 주요 기능별 동작
+이미지를 로드해서 Waveshare e-ink 디스플레이로 출력 :
+→ 옵션에 --simulate_display를 주지 않으면 display_waveshare 함수가 실행되어 이미지를 실제 디스플레이에 출력합니다.
+
+시뮬레이션 모드 (디스플레이 출력 X):
+→ -s 또는 --simulate_display 옵션 사용 시 실제 디스플레이 연결 없이 코드 실행(이미지 저장 등만 수행).
+
+디스플레이 방향 전환(세로/가로):
+→ -p 또는 --portrait 옵션 사용 시 세로 모드로 출력.
+
+지능적 크롭/단순 중앙 크롭/리사이즈만:
+→ -c (--centre_crop): 중앙 크롭
+→ -r (--resize_only): 리사이즈만
+→ 옵션 미사용 시 지능적 크롭(현저도 기반)
+
+디스플레이 종류 선택:
+→ --epd epd7in3f 형태로 디스플레이 종류 지정 가능.
 
 
 ## 자동화(crontab하고 shellscript 두가지 방식으로 구현해야함.)
