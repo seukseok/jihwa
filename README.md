@@ -78,6 +78,24 @@ scripts/install.sh
 
 더 많은 옵션을 보려면 `-h` 또는 `--help` 플래그 쓰세요.
 
+
+## 명령줄 옵션 (Command-line options)
+아래 옵션들은 src/display_picture.py를 실행할 때 사용할 수 있는 것들입니다.
+
+### 옵션
+
+image	(필수) 처리할 입력 이미지 파일 경로
+-o, --output	결과 이미지를 저장할 경로 (선택)
+-p, --portrait	세로 모드로 출력 (가로/세로 전환)
+-c, --centre_crop	지능적 크롭 대신 중앙 크롭 사용
+-r, --resize_only	크롭 없이 단순 리사이즈만 수행
+-s, --simulate_display	실제 e-Paper 디스플레이 없이 시뮬레이션 모드(출력 X)
+--width	디스플레이 너비 지정 (기본값: 480)
+--height	디스플레이 높이 지정 (기본값: 800)
+--epd	사용할 Waveshare EPD 모듈 타입 지정 (예: epd7in3f)
+--debug	디버그 로깅 활성화
+
+
 ## 자동화
 
 매일 같은 시간에 이미지를 생성하고 자동으로 표시하려면 crontab을 활용할 수 있습니다.  
