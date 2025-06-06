@@ -79,10 +79,10 @@ scripts/install.sh
 더 많은 옵션을 보려면 `-h` 또는 `--help` 플래그 쓰세요.
 
 
-## 명령줄 옵션 (Command-line options)
-아래 옵션들은 src/display_picture.py를 실행할 때 사용할 수 있는 것들입니다.
+## 명령줄 옵션 (Command-line options) (아직 수정중)
+아래 옵션들은 src/display_picture.py | src/generate_picture.py 를 실행할 때 사용할 수 있는 것들입니다.
 
-### 옵션(아직 수정중)
+### 이미지 출력 옵션(아직 수정중)
 
 image	(필수) 처리할 입력 이미지 파일 경로
 -o, --output	결과 이미지를 저장할 경로 (선택)
