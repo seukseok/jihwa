@@ -58,17 +58,48 @@ scripts/install.sh
 
 전체 빌드 과정은 상당히 오래 걸립니다(6 시간 소요). 
 
-# 이미지 생성 및 표시(명령줄 옵션 추가중)
+# 이미지 생성 및 표시
 
 ## 이미지 생성
 
-`python src/generate_picture.py --width=480 --height=800 --steps 3 image_dir`
+`python3 src/generate_picture.py image_dir`
 
 이 명령은 프롬프트를 기반으로 고유 이름을 가진 새 이미지와 표시하기 쉽게 'output.png'라는 이름의 복사본을 생성합니다.
 
+## 이미지 생성 명령줄 옵션 (Command-line options)
+
+아래는 src/generate_picture.py에서 사용할 수 있는 명령어 옵션(커맨드라인 인자)입니다.
+
+## src/generate_picture.py 명령어 옵션
+
+예시
+```bash
+python3 src/generate_picture.py --[선택인자1] --[선택인자2] --[선택인자3] [필수인자]
+```
+
+### 필수 인자
+
+| 인자 | 설명 |
+|------|------|
+| output_dir | 생성된 이미지를 저장할 디렉터리 (필수, 위치 인자) |
+
+### 선택 인자
+
+| 옵션 | 설명 |
+|------|------|
+| --prompts| 사용할 프롬프트 파일 (기본값: prompts/flowers.json) |
+| --prompt | 직접 프롬프트를 입력 (입력 시 프롬프트 파일 대신 사용) |
+| --seed | 이미지 생성을 위한 시드 값 (기본값: 1~10000 중 무작위) |
+| --steps | 추론 스텝 수 (기본값: 3) |
+| --width | 생성 이미지의 너비 (기본값: 480) |
+| --height | 생성 이미지의 높이 (기본값: 800) |
+| --sd | Stable Diffusion 실행 파일 경로 (기본값: OnnxStream/src/build/sd) |
+| --model | 사용할 Stable Diffusion 모델 경로 (기본값: models/stable-diffusion-xl-turbo-1.0-anyshape-onnxstream) |
+
+-----
 ## 이미지 표시(현재 FP32 Aritmetic을 사용하고 있기에 FP16 aritmetic으로 변경도 고려해야함)
 
-디스플레이에 표시하려면 `python src/display_picture.py -r image_dir/output.png` 명령을 사용하세요.
+디스플레이에 표시하려면 `python src/display_picture.py -c image_dir/output.png` 명령을 사용하세요.
 
 ## 가로로 디스플레이(단순히 -c, -p 조합으로 가로 디스플레이를 지원할지 고민중(또는 아래와 같이 너비, 높이 픽셀값 변경 스케쥴러 생성해야하는지..))
 
@@ -76,11 +107,13 @@ scripts/install.sh
 
 `python src/generate_picture.py --width=800 --height=480 image_dir`
 
+`python src/display_picture.py -c -p image_dir/output.png`
+
 더 많은 옵션을 보려면 `-h` 또는 `--help` 플래그 쓰세요.
 
 
-## 명령줄 옵션 (Command-line options) (아직 수정중)
-아래 옵션들은 src/display_picture.py | src/generate_picture.py 를 실행할 때 사용할 수 있는 것들입니다.
+## 이미지 출력 명령줄 옵션 (Command-line options)
+아래 옵션들은 src/display_picture.py 를 실행할 때 사용할 수 있는 것들입니다.
 
 옵션 조합에 따라
 
@@ -107,6 +140,7 @@ scripts/install.sh
 | --debug | 디버그 로깅 활성화 |
 
 ### 예시
+
 ```bash
 # python3 src/display_picture.py [이미지파일] [옵션들]
 
