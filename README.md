@@ -188,7 +188,7 @@ fullpath = os.path.join(image_dir, "output.png")
 
 [PiShrink로 라즈베리파이 이미지 축소](https://velog.io/@mseokq23/%EB%9D%BC%EC%A6%88%EB%B2%A0%EB%A6%AC%ED%8C%8C%EC%9D%B4-%EC%9D%B4%EB%AF%B8%EC%A7%80%ED%8C%8C%EC%9D%BC-%EC%9A%A9%EB%9F%89-%EC%A4%84%EC%9D%B4%EA%B8%B0)
 
-# 중간마다 새로운 프롬프트 수정이나 많은 코드를 업데이트 해야할 때.
+# 중간마다 새로운 프롬프트 수정이나 많은 코드를 업데이트 해야할 때.(하지만 Private 상태인 경우 안됨.)
 
 1. 저장소를 클론합니다:
 ```sh
