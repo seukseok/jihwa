@@ -68,14 +68,14 @@ scripts/install.sh
 
 ## 이미지 생성 명령줄 옵션 (Command-line options)
 
-아래는 src/generate_picture.py에서 사용할 수 있는 명령어 옵션(커맨드라인 인자)입니다.
+아래는 `python3 src/generate_picture.py`에서 사용할 수 있는 명령어 옵션(커맨드라인 인자)입니다.
 
-## src/generate_picture.py 명령어 옵션
+## generate_picture.py 명령어 옵션
 
 예시
-```bash
-python3 src/generate_picture.py --[선택인자1] --[선택인자2] --[선택인자3] [필수인자]
-```
+
+`python3 src/generate_picture.py --[선택인자1] --[선택인자2] --[선택인자3] [필수인자]`
+
 
 ### 필수 인자
 
@@ -224,15 +224,25 @@ fullpath = os.path.join(image_dir, "output.png")
 
 # 중간마다 새로운 프롬프트 수정이나 많은 코드를 업데이트 해야할 때.(하지만 Private 상태인 경우 안됨.)
 
+(프롬프트 복제용 git)[https://github.com/mseokq23/prompt_create.git]
+
 1. 저장소를 클론합니다:
 ```sh
-git clone https://github.com/mseokq23/jihwa_renew.git
+git clone https://github.com/mseokq23/prompt_create.git
 ```
 2. 클론한 디렉토리로 이동합니다:
 ```sh
-cd jihwa_renew
+cd prompt_create
 ```
 3. prompts 폴더를 원하는 경로로 복사합니다:
 ```sh
-cp -r prompts /원하는/경로/
+cp -r /home/jion/jihwa/prompt_create/[파일명].json /home/jion/jihwa/prompts
 ```
+
+# 생성한 이미지 이름 변경
+
+생성된 이미지들의 이름이 너무 길어서 테스트할 때, 번거로울 경우 아래 명령어로 이름을 바꿔보세요.
+
+`mv [수정전 파일명].json [수정후 파일명].json`
+
+그럼 `python3 src/display_picture.py -c image_dir/[수정후 파일명]` 이렇게 짧게 작성할 수 있습니다.
