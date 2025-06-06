@@ -134,6 +134,7 @@ python3 src/display_picture.py example.jpg --simulate_display
 → --epd epd7in3f 형태로 디스플레이 종류 지정 가능.
 
 
+------
 ## 자동화(crontab하고 shellscript 두가지 방식으로 구현해야함.)
 
 매일 같은 시간에 이미지를 생성하고 자동으로 표시하려면 crontab을 활용할 수 있습니다.  
