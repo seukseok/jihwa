@@ -48,7 +48,7 @@ sudo reboot
 sudo apt-get update -y
 sudo apt-get upgrade -y
 sudo apt install git
-git clone https://github.com/seukseok/jihwa.git
+git clone https://github.com/mseokq23/jihwa_renew.git
 ```
 그런 다음 설치 스크립트를 실행하세요:
 ```bash
