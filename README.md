@@ -221,7 +221,11 @@ fullpath = os.path.join(image_dir, "output.png")
 이는 실제 용량(24GB)가 아닌 64GB(개발중인 SD카드의 최대용량)으로 img 파일이 만들어지 때문에, 더 적은 용량의 SD카드에 옮기기 위해서는 
 복제한 img파일의 용량을 줄이는 과정이 필요합니다.
 
-이를 위해 Pishrink를 사용하시면 되며, SD카드를 img파일로 만드는 것은 Win32 Disk imager를 이용하고, 생성된 img파일은 rufus를 통해 포팅합니다.
+이를 위해 Pishrink를 사용하시면 되며, SD카드를 img파일로 만드는 것은 Win32 Disk imager를 이용하고, 생성된 img파일(pishrink으로 용량이 축소된 파일)은 rufus를 통해 포팅합니다.
+
+** SD카드를 img파일로 만드는 것: Win32 Disk imager [disk imager 설치 사이트](https://win32diskimager.org/) **
+
+** 생성된 img파일(pishrink으로 용량이 축소된 파일)을 포팅 : rufus [rufus 설치 사이트](https://rufus.ie/ko/) **
 
 아래 글을 참고하세요.
 
