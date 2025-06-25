@@ -63,6 +63,9 @@ scripts/install.sh
 # 이미지 생성 및 표시
 
 ## 이미지 생성
+```bash
+cd jihwa   # 모든 명령어는 jihwa에서만 실행해야합니다.
+```
 
 `python3 src/generate_picture.py image_dir`
 
