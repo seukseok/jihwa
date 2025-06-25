@@ -17,6 +17,8 @@
 # OS 설치(Pi imager 사용)
 
 * **Raspbian Bullseye Lite 64bit**.
+![image](https://github.com/user-attachments/assets/0e4fc96f-25d6-4a5d-aee3-e8772e1b74fc)
+
 * user: `jion`.
 * password: `1234`.
 
