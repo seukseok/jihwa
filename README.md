@@ -14,7 +14,7 @@
 
 ---
 
-# OS 설치
+# OS 설치(Pi imager 사용)
 
 * **Raspbian Bullseye Lite 64bit**.
 * user: `jion`.
