@@ -67,7 +67,7 @@ scripts/install.sh
 cd jihwa   # 모든 명령어는 jihwa에서만 실행해야합니다.
 ```
 
-`python3 src/generate_picture.py image_dir`
+`python3 src/generate_picture.py image_dir`   => 이미지 생성을 위한 기본 명령어입니다.
 
 이 명령은 프롬프트를 기반으로 고유 이름을 가진 새 이미지와 표시하기 쉽게 'output.png'라는 이름의 복사본을 생성합니다.
 
@@ -107,7 +107,12 @@ cd jihwa   # 모든 명령어는 jihwa에서만 실행해야합니다.
 -----
 ## 이미지 표시(출력)
 
-디스플레이에 표시하려면 `python src/display_picture.py -c image_dir/output.png` 명령을 사용하세요.
+```bash
+cd jihwa   # 모든 명령어는 jihwa에서만 실행해야합니다.
+```
+
+`python3 src/display_picture.py image_dir/output.png `   => 이미지 생성을 위한 기본 명령어입니다.
+
 | 이미지 명이  ` output.png `이 아닌 ` bunch_of_marigolds_in_cubism_style_seed_6651_steps_3.png ` 또는 ` output %d `와 같을 수 있기에 잘 확인하고 하셔야합니다. 
 
 더 많은 옵션을 보려면 `-h` 또는 `--help` 플래그 쓰세요.
