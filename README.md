@@ -19,8 +19,7 @@
 * **Raspbian Bullseye Lite 64bit**.
 ![image](https://github.com/user-attachments/assets/0e4fc96f-25d6-4a5d-aee3-e8772e1b74fc)
 
-* user: `jion`.
-* password: `1234`.
+* 사용자 계정: Pi Imager에서 직접 정한 사용자 이름과 비밀번호를 사용하세요 (use your own Pi credentials).
 
 ## 컴파일을 위한 스왑파일 크기 증가
 
@@ -256,7 +255,7 @@ cd prompt_create
 ```
 3. prompts 폴더를 원하는 경로로 복사합니다:
 ```sh
-cp -r /home/jion/jihwa/prompt_create/[파일명].json /home/jion/jihwa/prompts
+cp -r ~/jihwa/prompt_create/[파일명].json ~/jihwa/prompts
 ```
 
 # 생성한 이미지 이름 변경
