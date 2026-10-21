@@ -12,6 +12,22 @@
 - ✅ `cron, shell` 기반 자동 생성/출력 스케줄링 가능
 - ✅ 초저전력 구성 (저전력 SOC + e-ink 유지 전력)
 
+## 결과 / Results
+
+<p align="center">
+  <img src="docs/images/eink_display.jpg" width="360" alt="7.3-inch ACeP color e-ink display showing a generated snapdragon image"><br>
+  <sub>실제 7.3인치 컬러 전자잉크 표시 / Shown on the real 7.3" ACeP e-ink display</sub>
+</p>
+
+생성 이미지 예시 / Generated samples (SDXL Turbo on Raspberry Pi):
+
+| | | |
+|:---:|:---:|:---:|
+| <img src="docs/images/sample_snapdragons.jpg" height="160" alt="Snapdragons"> | <img src="docs/images/sample_lilies_popart.jpg" height="160" alt="Yellow lilies, pop art"> | <img src="docs/images/sample_flower_mosaic.jpg" height="160" alt="Flower mosaic"> |
+| 금어초 / Snapdragons | 노란 백합 (팝아트) / Yellow lilies, pop art | 꽃 모자이크 / Flower mosaic |
+| <img src="docs/images/sample_castle.jpg" height="160" alt="Castle"> | <img src="docs/images/sample_white_flower.jpg" height="160" alt="White flower painting"> | |
+| 성 / Castle | 흰 꽃 그림 / White flower painting | |
+
 ---
 
 # 1. OS 설치(Pi imager 사용)
